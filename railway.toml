@@ -2,4 +2,12 @@
 builder = "Nixpacks"
 
 [nixpacks]
-aptPackages = ["build-essential", "libffi-dev"]
+# Common build tools and libraries needed for Python C extensions
+aptPackages = [
+    "build-essential",
+    "libffi-dev",
+    "python3-dev", # Often needed for Python header files
+    "libssl-dev",  # Common for packages with TLS/SSL dependencies
+    "zlib1g-dev",  # Common for compression libraries
+    "libjpeg-dev", # For Pillow/image processing if it needs to recompile
+]
