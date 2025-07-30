@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tinder Photo Analyzer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .file-input-label {
+            display: block;
+            padding: 1rem 1.5rem;
+            border: 2px dashed #cbd5e0;
+            border-radius: 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s ease-in-out;
+        }
+        .file-input-label:hover {
+            border-color: #90cdf4; /* Tailwind blue-300 */
+        }
+        .file-input-label input[type="file"] {
+            display: none;
+        }
+        .file-list {
+            margin-top: 1rem;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            background-color: #fff;
+        }
+        .file-list-item {
+            padding: 0.5rem;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-list-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="container bg-white p-8 rounded-xl shadow-lg w-full">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Tinder Photo Analyzer</h1>
+        <p class="text-center text-gray-600 mb-8">Upload up to 9 photos for a detailed analysis based on proven dating app strategies.</p>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="list-none p-0 mb-4">
+                    {% for message in messages %}
+                        <li class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-2" role="alert">
+                            {{ message }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form action="/analyze" method="post" enctype="multipart/form-data" class="space-y-6">
+            <label for="photos" class="file-input-label text-gray-600 hover:text-blue-500 transition-colors">
+                <span class="text-lg font-semibold">Click to Upload Photos</span>
+                <span class="block text-sm mt-1">(Max 9 files, JPG, PNG, GIF)</span>
+                <input type="file" name="photos" id="photos" multiple accept="image/png, image/jpeg, image/gif" onchange="updateFileList(this.files)">
+            </label>
+
+            <div id="file-list" class="file-list hidden">
+                <h3 class="text-md font-semibold text-gray-700 mb-2">Selected Files:</h3>
+                <ul id="selected-files-ul"></ul>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-200">
+                Analyze My Photos
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function updateFileList(files) {
+            const fileListDiv = document.getElementById('file-list');
+            const selectedFilesUl = document.getElementById('selected-files-ul');
+            selectedFilesUl.innerHTML = ''; // Clear previous list
+
+            if (files.length > 0) {
+                fileListDiv.classList.remove('hidden');
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const listItem = document.createElement('li');
+                    listItem.className = 'file-list-item';
+                    listItem.textContent = file.name;
+                    selectedFilesUl.appendChild(listItem);
+                }
+                if (files.length > 9) {
+                    alert('You can upload a maximum of 9 photos. Only the first 9 will be processed.');
+                    // Optionally, disable submit or clear extra files
+                    // For now, the backend will handle processing only the first 9.
+                }
+            } else {
+                fileListDiv.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

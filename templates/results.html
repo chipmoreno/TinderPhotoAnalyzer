@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .analysis-section {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .analysis-text {
+            white-space: pre-wrap; /* Preserves whitespace and line breaks from LLM output */
+            word-wrap: break-word; /* Breaks long words */
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #4a5568; /* Tailwind gray-700 */
+        }
+        .image-preview {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="container bg-white p-8 rounded-xl shadow-lg w-full mb-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Tinder Photo Analysis Results</h1>
+        <p class="text-center text-gray-600 mb-8">Here's the expert assessment for your uploaded photos:</p>
+
+        {% if results %}
+            <div class="space-y-8">
+                {% for result in results %}
+                    <div class="analysis-section">
+                        <h2 class="text-2xl font-semibold text-blue-700 mb-4">Analysis for: {{ result.filename }}</h2>
+                        {% if result.filepath %}
+                            <img src="{{ result.filepath }}" alt="Uploaded Photo" class="image-preview">
+                        {% endif %}
+                        <div class="analysis-text">{{ result.analysis | trim }}</div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-700 text-lg">No analysis results available. Please go back and upload photos.</p>
+        {% endif %}
+
+        <div class="mt-8 text-center">
+            <a href="/" class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-200">
+                Analyze More Photos
+            </a>
+        </div>
+    </div>
+</body>
+</html>

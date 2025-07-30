@@ -1,0 +1,19 @@
+# Environment variables
+.env
+
+# Python-specific ignores (good practice to have)
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.venv/  # If you put your virtual environment inside your project folder
+venv/   # Another common virtual environment folder name
+*.log
+*.sqlite3 # If you use SQLite for development database
+# Ignore macOS system files
+.DS_Store
+
+# Ignore uploaded user photos
+*.png
+*.jpeg
+uploads/
