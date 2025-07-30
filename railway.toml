@@ -1,0 +1,5 @@
+[build]
+builder = "Nixpacks"
+
+[nixpacks]
+aptPackages = ["build-essential", "libffi-dev"]
