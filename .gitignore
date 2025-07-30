@@ -1,6 +1,16 @@
 # Environment variables
 .env
 
+# Node.js artifacts
+node_modules/
+package-lock.json
+yarn.lock
+npm-debug.log*
+.npm/
+.env # Keep this for your API key
+.DS_Store # Keep this for macOS files
+
+
 # Python-specific ignores (good practice to have)
 __pycache__/
 *.pyc

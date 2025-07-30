@@ -1,16 +1,11 @@
 # railway.toml
 [build]
 builder = "Nixpacks"
-# Explicitly set the build image to a Python-specific one if needed,
-# though Nixpacks usually detects it.
-# image = "python:3.10-slim-buster" # Example, Nixpacks often handles this.
 
 [start]
 cmd = "gunicorn --bind 0.0.0.0:$PORT app:app"
 
 [nixpacks]
-# Explicitly tell Nixpacks to not try to detect Node.js or other languages
-# by only specifying Python.
-# This might not be strictly necessary if the build command is explicit,
-# but it helps clarify intent.
+# Explicitly tell Nixpacks to only consider Python.
+# This helps prevent detection of other languages like Node.js.
 providers = ["python"]

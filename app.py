@@ -7,6 +7,8 @@ import time # For exponential backoff
 import json # To potentially catch JSON errors more explicitly
 import traceback # For detailed error logging
 import re
+import npm
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads' # Folder to temporarily store uploaded images
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # 16 MB max upload size
